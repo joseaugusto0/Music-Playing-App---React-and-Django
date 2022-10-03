@@ -4,6 +4,7 @@ import HomePage from "./HomePage";
 import { CreateRoomPage } from "./CreateRoomPage";
 import { RoomJoinPage } from "./RoomJoinPage";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {Room} from "./Room";
 
 export function App (){   
     return (
@@ -12,6 +13,7 @@ export function App (){
                 <Route exact path='/' element={<HomePage />} />
                 <Route path='/join' element={<RoomJoinPage />} />
                 <Route path='/create' element={<CreateRoomPage />} />
+                <Route path='/room/:roomCode' element={<Room />} />
             </Routes>                
         </Router>  
     )

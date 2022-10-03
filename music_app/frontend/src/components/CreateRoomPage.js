@@ -1,6 +1,6 @@
 import React, {Component, useState} from "react";
 import {Button, Grid, Typography, TextField, FormHelperText, FormControl, Radio, RadioGroup, FormControlLabel} from '@mui/material';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 export function CreateRoomPage () {
@@ -8,6 +8,8 @@ export function CreateRoomPage () {
         guestCanPause: true,
         votesToSkip: '2'
     })
+
+    const navigate = useNavigate();
 
     const handleVotesChanged = (e) => {
         setState( (prevState) => (
@@ -41,7 +43,7 @@ export function CreateRoomPage () {
 
         fetch('/api/create-room', requestOptions
             ).then((response) => response.json()
-            ).then((data) => console.log(data))
+            ).then((data) => navigate('/room/'+data.code))
     }
 
     return(
