@@ -8,14 +8,16 @@ import {Room} from "./Room";
 
 export function App (){   
     return (
-        <Router>
-            <Routes>
-                <Route exact path='/' element={<HomePage />} />
-                <Route path='/join' element={<RoomJoinPage />} />
-                <Route path='/create' element={<CreateRoomPage />} />
-                <Route path='/room/:roomCode' element={<Room />} />
-            </Routes>                
-        </Router>  
+        <div className="center">
+            <Router>
+                <Routes>
+                    <Route exact path='/' element={<HomePage />} />
+                    <Route path='/join' element={<RoomJoinPage />} />
+                    <Route path='/create' element={<CreateRoomPage />} />
+                    <Route path='/room/:roomCode' element={<Room />} />
+                </Routes>                
+            </Router>  
+        </div>
     )
 }
 
