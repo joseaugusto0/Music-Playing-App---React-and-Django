@@ -24,6 +24,12 @@ export function App (){
 
     }, [roomCode])
 
+    const clearRoomCode = () => {
+        setRoomCode({
+            roomCode: null
+        })
+    }
+
     return (
         <div className="center">
             <Router>
@@ -37,7 +43,7 @@ export function App (){
                     
                     <Route path='/join' element={<RoomJoinPage />} />
                     <Route path='/create' element={<CreateRoomPage />} />
-                    <Route path='/room/:roomCode' element={<Room />} />
+                    <Route path='/room/:roomCode' element={<Room leaveRoomCallback={clearRoomCode} />} />
                 </Routes>                
             </Router>  
         </div>
