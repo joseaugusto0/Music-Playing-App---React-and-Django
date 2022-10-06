@@ -12,6 +12,7 @@ export function Room(leaveRoomCallback) {
         votesToSkip:2,
         guestCanPause: false,
         isHost: false,
+        roomCode: null,
     })
 
     var [showSettings, setShowSettings] = useState(false)
@@ -36,7 +37,8 @@ export function Room(leaveRoomCallback) {
                             ...prevState,
                             votesToSkip: data.votes_to_skip,
                             guestCanPause: data.guest_can_pause,
-                            isHost: data.is_host
+                            isHost: data.is_host,
+                            roomCode: data.code
                         }
                     )
                 )
@@ -80,7 +82,7 @@ export function Room(leaveRoomCallback) {
                     votesToSkip={roomState.votesToSkip}
                     guestCanPause = {roomState.guestCanPause}
                     roomCode = {roomState.roomCode}
-                    updateCallback={() => {}}
+                    updateCallback={getRoomDetails}
                 />
             </Grid>
             <Grid item xs={12} align='center'>
