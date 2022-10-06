@@ -6,20 +6,23 @@ import { Collapse, Alert } from "@mui/material"
 
 export function CreateRoomPage(props) {
 
-    const _props = props
-    const title = _props.update ? "Update Room" : "Create a Room"
-
     const defaultProps ={
         votesToSkip: '2',
-        guestCanPause:true,
+        guestCanPause: true,
         update: false,
         roomCode: null,
         updateCallback: () => {}
     }
 
+    if (props.guestCanPause==undefined){
+        props = defaultProps
+    }
+
+    const title = props.update ? "Update Room" : "Create a Room"
+
     const [state, setState] = useState({
-        guestCanPause: _props.guestCanPause,
-        votesToSkip: _props.votesToSkip,
+        guestCanPause: props.guestCanPause,
+        votesToSkip: props.votesToSkip,
         errorMsg: "",
         sucessMsg: ""
     })
@@ -93,12 +96,13 @@ export function CreateRoomPage(props) {
                         }
                     ))
                 }
-                _props.updateCallback();
+                props.updateCallback();
             })
         
     }
 
     const renderButtons = () => {
+
         if (!props.update) {
             return (
                 <Grid container spacing={2}>
@@ -169,7 +173,7 @@ export function CreateRoomPage(props) {
                             Guest Controle of Playback State
                         </div>
                     </FormHelperText>
-                    <RadioGroup row defaultValue={_props.guestCanPause.toString()} onChange={HandleGuestCanPause}>
+                    <RadioGroup row defaultValue={props.guestCanPause.toString()} onChange={HandleGuestCanPause}>
                         <FormControlLabel 
                             value='true' 
                             control={<Radio color='primary' />}

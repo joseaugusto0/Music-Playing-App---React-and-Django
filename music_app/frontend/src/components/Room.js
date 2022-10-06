@@ -13,6 +13,7 @@ export function Room(leaveRoomCallback) {
         guestCanPause: false,
         isHost: false,
         roomCode: null,
+        spotifyAuthenticated: false
     })
 
     var [showSettings, setShowSettings] = useState(false)
@@ -42,11 +43,42 @@ export function Room(leaveRoomCallback) {
                         }
                     )
                 )
+
+                if (data.is_host){
+                    authenticateSpotify()
+                }
             })
+
+            
     }
 
     useEffect(getRoomDetails, [])
     
+    const authenticateSpotify = () => {
+        fetch('/spotify/is-authenticated')
+            .then((response) => response.json())
+            .then((data) => {
+
+                setRoomState( (prevState) =>
+                    (
+                        {
+                            ...prevState,
+                            spotifyAuthenticated: data.Status
+                        }
+                    )
+                )
+
+                if (!data.Status){
+                    fetch('/spotify/get-auth-url')
+                        .then((response) => response.json())
+                        .then((data) => {
+                            window.location.replace(data.url)
+                        })
+                }
+            }
+        )
+    }
+
     const leaveButtonPressed = () => {
         
         const requestOptions = {

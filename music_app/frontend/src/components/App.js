@@ -43,7 +43,7 @@ export function App (){
                     
                     <Route path='/join' element={<RoomJoinPage />} />
                     <Route path='/create' element={<CreateRoomPage />} />
-                    <Route path='/room/:roomCode' element={<Room leaveRoomCallback={clearRoomCode} />} />
+                    <Route path='/room/:roomCode' element={<Room leaveRoomCallback={() => {clearRoomCode()}} />} />
                 </Routes>                
             </Router>  
         </div>
