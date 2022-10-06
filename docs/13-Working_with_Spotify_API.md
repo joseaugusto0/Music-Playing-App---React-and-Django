@@ -249,3 +249,22 @@ After the Room infos has been get in the API, we will get the spotify authentica
         )
     }
 ```
+
+## Putting all secret codes in .env files
+```
+    pip install django-dotenv
+```
+- We create the .env file and import in manage.py
+```py
+    import dotenv
+    
+    def main():
+        """Run administrative tasks."""
+        dotenv.read_dotenv()
+```
+- We will call that way the environment variables:
+```py
+    import os
+
+    CLIENT_ID = os.environ.get("CLIENT_ID")
+```
