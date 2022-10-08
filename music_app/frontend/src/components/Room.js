@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import {Grid, Button, Typography} from "@mui/material"
 import { CreateRoomPage } from './CreateRoomPage';
+import { MusicPlayer } from './MusicPlayer';
 
 export function Room(leaveRoomCallback) {
-    
 
     const _leaveRoomCallback = leaveRoomCallback
 
@@ -13,13 +13,22 @@ export function Room(leaveRoomCallback) {
         guestCanPause: false,
         isHost: false,
         roomCode: null,
-        spotifyAuthenticated: false
+        spotifyAuthenticated: false,
     })
+
+    var [songInfos, setSongInfos] = useState({})
 
     var [showSettings, setShowSettings] = useState(false)
 
     const params = useParams();
     const navigate = useNavigate()
+
+    useEffect(() => {
+        getRoomDetails()
+        getCurrentSong()
+        const interval = setInterval(() => getCurrentSong(),1000)
+        return () => clearInterval(interval)
+    }, [])
 
     const getRoomDetails = () => {
         fetch('/api/get-room' + "?code=" + params.roomCode)
@@ -52,8 +61,21 @@ export function Room(leaveRoomCallback) {
             
     }
 
-    useEffect(getRoomDetails, [])
-    
+    const getCurrentSong = () => {
+        fetch('/spotify/current-song')
+            .then((response) => {
+                console.log(response)
+                if(!response.ok){
+                    return {};
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setSongInfos(data)
+            })
+
+    }
+
     const authenticateSpotify = () => {
         fetch('/spotify/is-authenticated')
             .then((response) => response.json())
@@ -136,25 +158,9 @@ export function Room(leaveRoomCallback) {
                         Code: {params.roomCode}
                     </Typography>
                 </Grid>
-
-                <Grid item xs={12} align="center">
-                    <Typography variant='h6' component='h4'>
-                        Votes: {roomState.votesToSkip}
-                    </Typography>
-                </Grid>
-
-                <Grid item xs={12} align="center">
-                    <Typography variant='h6' component='h4'>
-                        Guest Can Pause: {roomState.guestCanPause.toString()}
-                    </Typography>
-                </Grid>
-
-                <Grid item xs={12} align="center">
-                    <Typography variant='h6' component='h4'>
-                        Is Host: {roomState.isHost.toString()}
-                    </Typography>
-                </Grid>
-
+                <MusicPlayer 
+                    {...songInfos}
+                />
                 {roomState.isHost ? renderSettingButton() : null}
 
                 <Grid item xs={12} align="center">
