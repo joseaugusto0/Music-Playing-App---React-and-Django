@@ -53,7 +53,6 @@ class GetRoom(APIView):
             if len(room) > 0:
                 data = RoomSerializer(room[0]).data
                 data['is_host'] = self.request.session.session_key == room[0].host
-                print(self.request.session.session_key, file=sys.stderr)
                 return Response(data, status=status.HTTP_200_OK)
             
             return Response({'Room Not Found': "Invalid Room Code"}, status=status.HTTP_404_NOT_FOUND)
@@ -92,7 +91,6 @@ class UserInRoom(APIView):
         data = {
             'code': self.request.session.get('room_code')
         }
-        print(data)
         return JsonResponse(data, status=status.HTTP_200_OK)
 
 class LeaveRoom(APIView):
@@ -120,7 +118,7 @@ class UpdateView(APIView):
             self.request.session.create()
 
         serializer = self.serializer_class(data=request.data)
-        print(request.data)
+
         if serializer.is_valid():
             guest_can_pause= serializer.data.get('guest_can_pause')
             votes_to_skip= serializer.data.get('votes_to_skip')

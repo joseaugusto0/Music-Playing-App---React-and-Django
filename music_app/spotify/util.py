@@ -1,9 +1,11 @@
 
 from datetime import timedelta
+import os
+import base64
 from .credentials import CLIENT_ID, CLIENT_SECRET
 from .models import SpotifyToken
 from django.utils import timezone
-from requests import post
+from requests import get, post, put
 
 def get_user_tokens(session_key):
     user_tokens = SpotifyToken.objects.filter(user=session_key)
@@ -48,18 +50,21 @@ def is_spotify_authenticated(session_key):
 
 def refresh_spotify_token(tokens,session_key:str = ""):
     refresh_token = tokens.refresh_token
-
+    
+    #headers = {
+    #    'Authorization': f"Basic {client_encoded}"
+    #}
     response = post('https://accounts.spotify.com/api/token', data={
         'grant_type': 'refresh_token',
         'refresh_token': refresh_token,
-        'client_id': CLIENT_ID,
-        'client_secred': CLIENT_SECRET
+        'client_id': os.environ.get('CLIENT_ID'),
+        'client_secret': os.environ.get('CLIENT_SECRET')
     }).json()
 
     access_token = response.get('access_token')
     token_type = response.get('token_type')
     expires_in = response.get('expires_in')
-    refresh_token = response.get('refresh_token')
+    refresh_token = refresh_token
 
     update_or_create_user_tokens(
         session_key, 
@@ -67,3 +72,25 @@ def refresh_spotify_token(tokens,session_key:str = ""):
         token_type=token_type, 
         expires_in=expires_in, 
         refresh_token=refresh_token)
+
+def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
+    tokens = get_user_tokens(session_id)
+    header = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + tokens.access_token 
+    }
+
+    if post_:
+        post(os.environ.get('BASE_URL') + endpoint, headers=header)
+
+    if put_:
+        put(os.environ.get('BASE_URL') + endpoint, headers=header)
+
+    #The {} in the middle is because the sintax says that we need to send something in GET requests
+    response = get(os.environ.get('BASE_URL') + endpoint, {}, headers=header)
+    print(response)
+    try:
+        return response.json()
+    except:
+        return {'Error': 'Issue with request'}
+
