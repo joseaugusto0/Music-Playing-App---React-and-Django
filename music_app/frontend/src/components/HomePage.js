@@ -22,6 +22,9 @@ export default function HomePage () {
                         Create a Room
                     </Button>
 
+                    <Button color='primary' to='/info' component={ Link }>
+                        Info
+                    </Button>
 
                 </ButtonGroup>
             </Grid>

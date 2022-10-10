@@ -5,6 +5,7 @@ import { CreateRoomPage } from "./CreateRoomPage";
 import { RoomJoinPage } from "./RoomJoinPage";
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import {Room} from "./Room";
+import InfoComponent from "./Infos";
 
 export function App (){   
 
@@ -43,6 +44,7 @@ export function App (){
                     
                     <Route path='/join' element={<RoomJoinPage />} />
                     <Route path='/create' element={<CreateRoomPage />} />
+                    <Route path='/info' element={<InfoComponent />} />
                     <Route path='/room/:roomCode' element={<Room leaveRoomCallback={() => {clearRoomCode()}} />} />
                 </Routes>                
             </Router>  
