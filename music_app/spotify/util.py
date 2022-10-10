@@ -99,5 +99,7 @@ def play_song(host_session_id):
 def pause_song(host_session_id):
     return execute_spotify_api_request(session_id=host_session_id, endpoint="/player/pause", put_=True)
 
+def skip_song(session_id):
+    return execute_spotify_api_request(session_id=session_id, endpoint="/player/next", post_=True)
 
 

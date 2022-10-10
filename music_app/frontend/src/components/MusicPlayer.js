@@ -24,6 +24,15 @@ export function MusicPlayer(songInfos) {
         fetch('/spotify/play-song', requestOption)
     }
 
+    const skipSong = () => {
+
+        const requestOption = {
+            method: 'POST',
+            headers: {'Content-type':'application/json'}
+        }
+        fetch('/spotify/skip-song', requestOption)
+    }
+
     return (
         <Card>
             <Grid container alignItem='center'>
@@ -47,8 +56,8 @@ export function MusicPlayer(songInfos) {
                             {songInfos.is_playing ? <PauseCircle/> : <PlayCircle />}
                         </IconButton>
 
-                        <IconButton>
-                            <SkipNext />
+                        <IconButton onClick={() => {skipSong()}}>
+                            <SkipNext /> {songInfos.votes} /{" "} {songInfos.votes_required}
                         </IconButton>
                     </div>
                 </Grid>
