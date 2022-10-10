@@ -7,6 +7,23 @@ import { PlayCircle, SkipNext, PauseCircle } from '@mui/icons-material'
 export function MusicPlayer(songInfos) {
     const songProgress = (songInfos.time / songInfos.duration)*100
 
+    const pauseSong = () => {
+        const requestOption = {
+            method: 'PUT',
+            headers: {'Content-type':'application/json'}
+        }
+        fetch('/spotify/pause-song', requestOption)
+    }
+
+    const playSong = () => {
+
+        const requestOption = {
+            method: 'PUT',
+            headers: {'Content-type':'application/json'}
+        }
+        fetch('/spotify/play-song', requestOption)
+    }
+
     return (
         <Card>
             <Grid container alignItem='center'>
@@ -26,7 +43,7 @@ export function MusicPlayer(songInfos) {
                     </Typography>
 
                     <div>
-                        <IconButton>
+                        <IconButton onClick={() => {songInfos.is_playing ? pauseSong() : playSong()}}>
                             {songInfos.is_playing ? <PauseCircle/> : <PlayCircle />}
                         </IconButton>
 

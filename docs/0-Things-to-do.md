@@ -1,0 +1,2 @@
+- Advice in play/pause if the user can't make this functions
+- default infos to the music player, and avoid the blank MusicPlayer component
