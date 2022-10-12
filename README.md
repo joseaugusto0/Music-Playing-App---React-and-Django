@@ -1,5 +1,6 @@
 # Music Room - React and Django
-![Python](https://github.com/MikeCodesDotNET/ColoredBadges/blob/master/svg/dev/languages/python.svg)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
 ## Description
   Music Room was a software developed in a serie of videos created by [Tech With Tim](https://www.techwithtim.net/) which approached the creation of a joinable room that handles the spotify music thats playing, has a logic to control the skip by the number of votes. Was created with Django and React frameworks using SpotifyAPI
