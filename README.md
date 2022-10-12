@@ -98,23 +98,23 @@ This route is just to update the music room parameters if the request came from 
 ## 2 - Frontend Routes
 
 ### 2.1 - localhost:8000/ - GET
-This route will return the main home page if the user doesn't have a room code in his session infos. If it, will go to [localhost:8000/room/:roomCode](#24---localhost8000roomroomcode---get)
+This route will return the main home page if the user doesn't have a room code in his session infos. If it, will go to [localhost:8000/room/:roomCode](#24---localhost8000roomroomcode---get)<br></br>
 ![Home Page](/docs/images/HomePage.PNG)
 
 ### 2.2 - localhost:8000/join - GET
-Just a page to join in a created room with his code.
+Just a page to join in a created room with his code.<br></br>
 ![Join Room Page](/docs/images/JoinRoom.PNG)
 
 ### 2.3 - localhost:8000/create - GET
-A page to create a new music room
+A page to create a new music room<br></br>
 ![Create Room Page](/docs/images/CreateRoomPage.PNG)
 
 ### 2.4 - localhost:8000/info - GET
-A page that describes some app infos. What is the app, how it work.
+A page that describes some app infos. What is the app, how it work.<br></br>
 ![Info Page](/docs/images/InfoPage.PNG)
 
 ### 2.4 - localhost:8000/room/:roomCode - GET
-That's the route that will go to the music room. Needs the parameters roomCode to make the request and return the room infos.
+That's the route that will go to the music room. Needs the parameters roomCode to make the request and return the room infos.<br></br>
 ![Room Page](/docs/images/RoomPage.PNG)
 
 ## Challenges Proposed
